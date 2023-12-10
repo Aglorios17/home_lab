@@ -34,5 +34,19 @@ services:
       - "32412:32412/udp"
       - "32413:32413/udp"
       - "32414:32414/udp"
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Europe/Brussels
+      - PORT=5055
+    ports:
+      - 5055:5055
+    #volumes:
+    #  - /path/to/appdata/config:/app/config
+    restart: unless-stopped
+
 volumes:
   portainer_data:

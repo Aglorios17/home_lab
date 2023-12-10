@@ -29,7 +29,7 @@ Streaming Hub: Stream media content effortlessly across devices.
 ## Fully automated Plex server
 - Plex
 - jacket
-- overseer
+- overseerr
 - ...
 
 ## Start
