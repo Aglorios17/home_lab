@@ -1,0 +1,9 @@
+# Use the official Plex Media Server image from Docker Hub
+FROM plexinc/pms-docker
+
+# Optionally, you can customize the entry point script or add additional configurations
+# COPY entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
+
+# Expose the Plex Media Server port
+#EXPOSE 32400

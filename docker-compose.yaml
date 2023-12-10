@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  plex:
+    build:
+      context: ./Plex
+    container_name: plex
+    restart: always
+    volumes:
+      - ~/plex/config:/config
+      - ~/plex/media:/media
+      - ~/plex/transcode:/transcode
+    environment:
+      - PLEX_CLAIM=${PLEX_CODE}
+      - PLEX_SERVER_NAME=PlexFlux
+      - TZ=Europe/Brussels
+    ports:
+      - "32400:32400"
+      - "3005:3005"
+      - "8324:8324"
+      - "32469:32469"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+volumes:
+  portainer_data:
