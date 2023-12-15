@@ -7,9 +7,13 @@ services:
     restart: always
     ports:
       - "9000:9000"
+    command: --admin-password "${PORTAINER_PASS}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+#    networks:
+#      my_network:
+#        ipv4_address: 172.16.1.1
 
   plex:
     build:
@@ -34,6 +38,9 @@ services:
       - "32412:32412/udp"
       - "32413:32413/udp"
       - "32414:32414/udp"
+#    networks:
+#      my_network:
+#        ipv4_address: 172.16.1.2
 
   overseerr:
     image: sctx/overseerr:latest
@@ -47,6 +54,36 @@ services:
     #volumes:
     #  - /path/to/appdata/config:/app/config
     restart: unless-stopped
+#    networks:
+#      my_network:
+#        ipv4_address: 172.16.1.3
+  
+  nginx:
+    build:
+      context: ./Nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+#    networks:
+#      my_network:
+#        ipv4_address: 172.16.1.4
+    
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE}
+
+
+#networks:
+#  my_network:
+#    ipam:
+#      config:
+#        - subnet: 172.16.1.0/24
 
 volumes:
   portainer_data:
